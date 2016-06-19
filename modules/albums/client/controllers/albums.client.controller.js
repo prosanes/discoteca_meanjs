@@ -13,6 +13,7 @@
 
     vm.authentication = Authentication;
     vm.album = album;
+    vm.artists = [{ id: 1, name: 'Macacos do Artico'}];
     vm.error = null;
     vm.form = {};
     vm.remove = remove;

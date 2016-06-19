@@ -10,11 +10,19 @@ var mongoose = require('mongoose'),
  * Album Schema
  */
 var AlbumSchema = new Schema({
-  name: {
+  title: {
     type: String,
     default: '',
-    required: 'Please fill Album name',
+    required: 'Preencha o titulo do album',
     trim: true
+  },
+  artist: {
+    type: Schema.ObjectId,
+    required: 'Escolha um artista',
+    ref: 'Artist'
+  },
+  year: {
+    type: String
   },
   created: {
     type: Date,
