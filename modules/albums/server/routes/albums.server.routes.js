@@ -11,6 +11,9 @@ module.exports = function(app) {
   app.route('/api/albums').all(albumsPolicy.isAllowed)
     .get(albums.list)
     .post(albums.create);
+  
+  app.route('/api/searchable_albums')
+    .get(albums.search);
 
   app.route('/api/albums/:albumId').all(albumsPolicy.isAllowed)
     .get(albums.read)

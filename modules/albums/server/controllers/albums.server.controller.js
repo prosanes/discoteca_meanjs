@@ -86,12 +86,29 @@ exports.list = function(req, res) {
        .populate('user', 'displayName')
        .populate('artist', 'name')
        .exec(function(err, albums) {
+         if (err) {
+           return res.status(400).send({
+             message: errorHandler.getErrorMessage(err)
+           });
+         } else {
+           res.jsonp(albums);
+         }
+       });
+};
+
+/**
+ * Search Albums
+ */
+exports.search = function(req, res) {
+  Album.search({
+    queryString: { query: "AM" }
+  }, function(err, results) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.jsonp(albums);
+      res.json({ albums: results.hits.hits });
     }
   });
 };
@@ -111,14 +128,14 @@ exports.albumByID = function(req, res, next, id) {
        .populate('user', 'displayName')
        .populate('artist', 'name')
        .exec(function (err, album) {
-    if (err) {
-      return next(err);
-    } else if (!album) {
-      return res.status(404).send({
-        message: 'No Album with that identifier has been found'
-      });
-    }
-    req.album = album;
-    next();
-  });
+         if (err) {
+           return next(err);
+         } else if (!album) {
+           return res.status(404).send({
+             message: 'No Album with that identifier has been found'
+           });
+         }
+         req.album = album;
+         next();
+       });
 };

@@ -22,6 +22,12 @@
       state: 'albums.list'
     });
 
+    // Add the dropdown list item
+    Menus.addSubMenuItem('topbar', 'albums', {
+      title: 'Search Albums',
+      state: 'albums.search'
+    });
+
     // Add the dropdown create item
     Menus.addSubMenuItem('topbar', 'albums', {
       title: 'Create Album',

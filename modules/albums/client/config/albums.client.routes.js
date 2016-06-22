@@ -23,6 +23,12 @@
           pageTitle: 'Albums List'
         }
       })
+      .state('albums.search', {
+        url: '^/searchable_albums',
+        templateUrl: 'modules/albums/client/views/list-albums.client.view.html',
+        controller: 'AlbumsSearchController',
+        controllerAs: 'vm'
+      })
       .state('albums.create', {
         url: '/create',
         templateUrl: 'modules/albums/client/views/form-album.client.view.html',

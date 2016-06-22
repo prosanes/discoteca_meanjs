@@ -12,9 +12,8 @@
     return $resource('api/albums/:albumId', {
       albumId: '@_id'
     }, {
-      update: {
-        method: 'PUT'
-      }
+      update: { method: 'PUT' },
+      search: { method: 'GET', url: 'api/searchable_albums' }
     });
   }
 })();

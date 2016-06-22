@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+  mongoosastic = require('mongoosastic'),
   Schema = mongoose.Schema;
 
 /**
@@ -34,4 +35,22 @@ var AlbumSchema = new Schema({
   }
 });
 
-mongoose.model('Album', AlbumSchema);
+AlbumSchema.plugin(mongoosastic);
+
+var Album = mongoose.model('Album', AlbumSchema);
+
+if (process.env.NODE_ENV === 'development') {
+  // Index existing
+  var stream = Album.synchronize();
+  var count = 0;
+   
+  stream.on('data', function(err, doc){
+    count++;
+  });
+  stream.on('close', function(){
+    console.log('indexed ' + count + ' Albums!');
+  });
+  stream.on('error', function(err){
+    console.log(err);
+  });
+}
