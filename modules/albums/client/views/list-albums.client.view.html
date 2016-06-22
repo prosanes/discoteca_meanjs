@@ -13,7 +13,8 @@
         <span data-ng-if="album.user" data-ng-bind="album.user.displayName"></span>
         <span data-ng-if="!album.user">Deleted User</span>
       </small>
-      <h4 class="list-group-item-heading" data-ng-bind="album.name"></h4>
+      <h4 class="list-group-item-heading" data-ng-bind="album.title"></h4>
+      <h5 data-ng-bind="album.artist.name"></h5>
     </a>
   </div>
   <div class="alert alert-warning text-center" data-ng-if="vm.albums.$resolved && !vm.albums.length">

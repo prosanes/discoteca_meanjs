@@ -6,8 +6,8 @@
     <form name="vm.form.albumForm" class="form-horizontal" ng-submit="vm.save(vm.form.albumForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
-          <label class="control-label" for="name">Name</label>
-          <input name="name" type="text" ng-model="vm.album.name" id="name" class="form-control" placeholder="Name" required>
+          <label class="control-label" for="name">Título</label>
+          <input name="title" type="text" ng-model="vm.album.title" id="name" class="form-control" placeholder="Name" required>
           <div ng-messages="vm.form.albumForm.name.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Album name is required.</p>
           </div>

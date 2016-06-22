@@ -81,7 +81,11 @@ exports.delete = function(req, res) {
  * List of Albums
  */
 exports.list = function(req, res) { 
-  Album.find().sort('-created').populate('user', 'displayName').exec(function(err, albums) {
+  Album.find()
+       .sort('-created')
+       .populate('user', 'displayName')
+       .populate('artist', 'name')
+       .exec(function(err, albums) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -103,7 +107,10 @@ exports.albumByID = function(req, res, next, id) {
     });
   }
 
-  Album.findById(id).populate('user', 'displayName').exec(function (err, album) {
+  Album.findById(id)
+       .populate('user', 'displayName')
+       .populate('artist', 'name')
+       .exec(function (err, album) {
     if (err) {
       return next(err);
     } else if (!album) {
