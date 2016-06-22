@@ -6,14 +6,15 @@
     .module('albums')
     .controller('AlbumsController', AlbumsController);
 
-  AlbumsController.$inject = ['$scope', '$state', 'Authentication', 'albumResolve'];
+  AlbumsController.$inject = ['$scope', '$state', 'Authentication', 'albumResolve', 'ArtistsService'];
 
-  function AlbumsController ($scope, $state, Authentication, album) {
+  function AlbumsController ($scope, $state, Authentication, album, ArtistsService) {
     var vm = this;
 
     vm.authentication = Authentication;
     vm.album = album;
-    vm.artists = [{ id: 1, name: 'Macacos do Artico'}];
+    //TODO what to do when there is too many artists?
+    vm.artists = ArtistsService.query();
     vm.error = null;
     vm.form = {};
     vm.remove = remove;
