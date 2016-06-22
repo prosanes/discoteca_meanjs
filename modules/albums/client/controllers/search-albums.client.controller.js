@@ -10,8 +10,13 @@
   function AlbumsSearchController(AlbumsService) {
     var vm = this;
 
-    AlbumsService.search(function(a) { 
-      vm.albums = a.albums.map(function(obj) { return obj._source; });
-    });
+    vm.albums = [];
+
+    vm.search = function() {
+      var query = vm.query;
+      AlbumsService.search({ query: query }, function(result) { 
+        vm.albums = result.albums;
+      });
+    };
   }
 })();

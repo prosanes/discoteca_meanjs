@@ -101,8 +101,10 @@ exports.list = function(req, res) {
  */
 exports.search = function(req, res) {
   Album.search({
-    queryString: { query: "AM" }
-  }, function(err, results) {
+    queryString: req.query
+  },
+  { hydrate: true },
+  function(err, results) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)

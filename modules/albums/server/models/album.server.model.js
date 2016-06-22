@@ -15,12 +15,14 @@ var AlbumSchema = new Schema({
     type: String,
     default: '',
     required: 'Preencha o titulo do album',
-    trim: true
+    trim: true,
+    es_indexed: true
   },
   artist: {
     type: Schema.ObjectId,
     required: 'Escolha um artista',
-    ref: 'Artist'
+    ref: 'Artist',
+    es_indexed: true
   },
   year: {
     type: String
