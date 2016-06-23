@@ -25,5 +25,8 @@ var ArtistSchema = new Schema({
     ref: 'User'
   }
 });
+exports.ArtistSchema = ArtistSchema;
 
-mongoose.model('Artist', ArtistSchema);
+var Artist = mongoose.model('Artist', ArtistSchema);
+
+exports.Artist = Artist;

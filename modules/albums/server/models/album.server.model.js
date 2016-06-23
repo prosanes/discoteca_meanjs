@@ -5,7 +5,8 @@
  */
 var mongoose = require('mongoose'),
   mongoosastic = require('mongoosastic'),
-  Schema = mongoose.Schema;
+  Schema = mongoose.Schema,
+  ArtistSchema = require('../../../artists/server/models/artist.server.model').ArtistSchema;
 
 /**
  * Album Schema
@@ -22,7 +23,9 @@ var AlbumSchema = new Schema({
     type: Schema.ObjectId,
     required: 'Escolha um artista',
     ref: 'Artist',
-    es_indexed: true
+    es_indexed: true,
+    es_schema: ArtistSchema,
+    es_select: 'name'
   },
   year: {
     type: String
@@ -35,9 +38,14 @@ var AlbumSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   }
-});
+}, { autoindex: true });
 
-AlbumSchema.plugin(mongoosastic);
+AlbumSchema.plugin(mongoosastic, {
+  indexAutomatically: true,
+  populate: [
+    {path: 'artist', select: 'name'}
+  ]
+});
 
 var Album = mongoose.model('Album', AlbumSchema);
 
@@ -45,7 +53,7 @@ if (process.env.NODE_ENV === 'development') {
   // Index existing
   var stream = Album.synchronize();
   var count = 0;
-   
+
   stream.on('data', function(err, doc){
     count++;
   });
@@ -56,3 +64,5 @@ if (process.env.NODE_ENV === 'development') {
     console.log(err);
   });
 }
+
+exports = Album;

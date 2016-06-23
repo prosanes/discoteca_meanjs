@@ -84,7 +84,7 @@ exports.list = function(req, res) {
   Album.find()
        .sort('-created')
        .populate('user', 'displayName')
-       .populate('artist', 'name')
+       .populate({path: 'artist', select: 'name'})
        .exec(function(err, albums) {
          if (err) {
            return res.status(400).send({
