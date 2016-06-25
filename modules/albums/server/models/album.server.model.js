@@ -43,7 +43,7 @@ var AlbumSchema = new Schema({
 AlbumSchema.plugin(mongoosastic, {
   indexAutomatically: true,
   populate: [
-    {path: 'artist', select: 'name'}
+    { path: 'artist', select: 'name' }
   ]
 });
 
