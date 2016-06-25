@@ -6,12 +6,13 @@
 var should = require('should'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
-  Album = mongoose.model('Album');
+  Album = mongoose.model('Album'),
+  Artist = mongoose.model('Artist');
 
 /**
  * Globals
  */
-var user, album;
+var user, artist, album;
 
 /**
  * Unit tests
@@ -28,12 +29,20 @@ describe('Album Model Unit Tests:', function() {
     });
 
     user.save(function() { 
-      album = new Album({
-        name: 'Album Name',
+      artist = new Artist({
+        name: 'Artist Name',
         user: user
       });
 
-      done();
+      artist.save(function() {
+        album = new Album({
+          title: 'Album Title',
+          artist: artist,
+          user: user
+        });
+
+        done();
+      });
     });
   });
 
@@ -47,7 +56,7 @@ describe('Album Model Unit Tests:', function() {
     });
 
     it('should be able to show an error when try to save without name', function(done) { 
-      album.name = '';
+      album.title = '';
 
       return album.save(function(err) {
         should.exist(err);
