@@ -16,16 +16,11 @@ var AlbumSchema = new Schema({
     type: String,
     default: '',
     required: 'Preencha o titulo do album',
-    trim: true,
-    es_indexed: true
+    trim: true
   },
   artist: {
-    type: Schema.ObjectId,
-    required: 'Escolha um artista',
-    ref: 'Artist',
-    es_indexed: true,
-    es_schema: ArtistSchema,
-    es_select: 'name'
+    type: ArtistSchema,
+    ref: 'Artist'
   },
   year: {
     type: String
@@ -38,20 +33,15 @@ var AlbumSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   }
-}, { autoindex: true });
-
-AlbumSchema.plugin(mongoosastic, {
-  indexAutomatically: true,
-  populate: [
-    { path: 'artist', select: 'name' }
-  ]
 });
+
+AlbumSchema.plugin(mongoosastic);
 
 var Album = mongoose.model('Album', AlbumSchema);
 
 if (process.env.NODE_ENV === 'development') {
   // Index existing
-  var stream = Album.synchronize();
+  var stream = Album.synchronize({}, { saveOnSynchronize: false });
   var count = 0;
 
   stream.on('data', function(err, doc){

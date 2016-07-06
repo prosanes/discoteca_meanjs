@@ -101,9 +101,11 @@ exports.list = function(req, res) {
  */
 exports.search = function(req, res) {
   Album.search({
-    queryString: req.query
+    queryString: {
+      query: req.query.query
+    }
   },
-  { hydrate: true },
+  { hydrate: true }, //TODO: Is this going to mongoDb even when all fields are filled ?
   function(err, results) {
     if (err) {
       return res.status(400).send({
